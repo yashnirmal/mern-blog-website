@@ -1,0 +1,14 @@
+.navbar{
+    height: 80px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background: linear-gradient(rgba(216, 157, 155, 0.613),rgba(171, 127, 126, 0.723));
+}
+
+.title{
+    font-weight: bold;
+    font-size: 2.5rem;
+    text-decoration: none;
+    color: rgb(22, 22, 22);
+}
