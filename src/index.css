@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+:root{
+    --primary-color:rgb(169, 58, 58);
+    --primary-color-dark: brown;
+    --gray:gray;
+    --gray-light:rgb(248, 248, 248);
+    --red:rgb(224, 86, 86);
+    --red-light:rgb(244, 218, 218);
+}
+
 *{
   margin: 0;
   padding: 0;
@@ -14,10 +23,54 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  /* background-color: #CFD6DF; */
   color: #393939;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+input {
+  outline: none;
+  width: 100%;
+  padding: 7px;
+  border: 2px solid rgb(204, 204, 204);
+  border-radius: 5px;
+  font-size: 1.1rem;
+}
+
+input:focus {
+  border-color: gray;
+}
+
+textarea {
+  outline: none;
+  width: 100%;
+  height: 200px;
+  padding: 5px 5px;
+  border: 2px solid rgb(204, 204, 204);
+  border-radius: 5px;
+  font-size: 1.1rem;
+}
+
+textarea:focus {
+  border-color: gray;
+}
+
+button {
+  width: 100%;
+  padding: 10px 0px;
+  font-weight: bold;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--primary-color-dark);
 }

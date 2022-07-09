@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import BlogCard from './BlogCard'
+import BlogCard from './BlogCard';
+import FilterComp from './FilterComp';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function BlogContainer() {
 
@@ -19,14 +21,22 @@ export default function BlogContainer() {
 
 
   return (
-    (!allBlogs.length)?(<span>Loading...</span>):(
-    <div style={{width:600,margin:"20px auto"}}>
-        {
+    <>
+      <div style={{width:600,margin:"20px auto"}}>
+      {
+        (!allBlogs.length)?(
+        <div style={{marginTop:200,textAlign:"center"}}>
+          <CircularProgress />
+        </div>
+        ):(
           allBlogs.map((el,index)=>(
             <BlogCard el={el} />
           ))
-        }
-    </div>
-    )
+        )
+      }
+
+      <FilterComp />
+      </div>
+    </>
   )
 }

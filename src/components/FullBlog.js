@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import "./FullBlog.css";
 import { useParams } from "react-router-dom";
+import AuthorProfile from './AuthorProfile';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function FullBlog() {
 
   const blogId = useParams().id;
-  const [blog,setBlog] = useState({})
+  const [blog,setBlog] = useState(null);
 
   useState(()=>{
     console.log(blogId);
@@ -23,6 +25,10 @@ export default function FullBlog() {
   })
 
   return (
+    (!blog)?
+    <div style={{width:"100vw",marginTop:200,textAlign:"center"}}>
+      <CircularProgress />
+    </div>:
     <div className='fullblog'>
         <div className='authod-date-div'>
             <span>By: {blog.author}</span>
@@ -34,6 +40,8 @@ export default function FullBlog() {
             <p className='blog-title'>{blog.title}</p>
             <p className='blog-description'>{blog.description}</p>
         </div>
+
+        <AuthorProfile />
     </div>
   )
 }

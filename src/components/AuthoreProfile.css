@@ -1,0 +1,40 @@
+.author-profile{
+    width: 280px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 0px 10px 9px rgba(0, 0, 0, 0.05);
+
+    position: absolute;
+    transform: translate(250%, 0);
+    top: 105px;
+}
+
+.author-profile>*{
+    margin-bottom: 10px;
+}
+
+.author-profile>p{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.author-profile>img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.author-profile>button{
+    font-size: 1rem;
+}
+
+.view-profile-btn{
+    background-color: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.view-profile-btn:hover{
+    background-color: white;
+}

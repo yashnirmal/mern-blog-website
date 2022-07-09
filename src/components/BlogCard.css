@@ -30,6 +30,9 @@
 }
 
 .description>button{
+    width: fit-content;
+    padding: 0;
+    font-weight: lighter;
     background-color: transparent;
     outline: none;
     border: none;

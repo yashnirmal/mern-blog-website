@@ -1,4 +1,5 @@
 .navbar{
+    width: 100vw;
     height: 80px;
     display: flex;
     justify-content: space-evenly;
@@ -11,4 +12,42 @@
     font-size: 2.5rem;
     text-decoration: none;
     color: rgb(22, 22, 22);
+}
+
+.navbar-login-signin-div{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+    align-items: center;
+}
+
+.navbar-login-signin-div>button{
+    padding: 10px;
+}
+
+.navbar-profile-image-div{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: 2px dashed var(--primary-color)
+}
+
+.navbar-profile-image-div>img{
+    width: 100%;
+}
+
+/* Popover */
+
+.profile-popover-list{
+    width: 200px;
+    height: fit-content;
+}
+
+
+.profile-popover-list span{
+    margin: auto;
+}
+
+.popover-logout-btn{
+    color: var(--red);
 }
