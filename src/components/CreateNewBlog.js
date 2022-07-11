@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
 import "./CreateNewBlog.css";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function CreateNewBlog() {
 
   const [isError,setIsError] = useState(0);
+  const author = useSelector(state=>state.userReducer).name;
 
   function postNewBlog(){
     const title = document.querySelector('.new-title').value;
-    const author = document.querySelector(".new-author").value;
+    const tags = document.querySelector(".new-tags").value.split(',');
     const description = document.querySelector(".new-description").value;
     const imgUrl = document.querySelector(".new-url").value;
     const date = new Date();
     const postDate = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear();
+
 
     const blog = {
       title,
       description,
       imgUrl,
       author,
-      postDate
+      postDate,
+      tags
     }
 
     const requestOptions = {
@@ -42,10 +46,10 @@ export default function CreateNewBlog() {
     <div className='create-new-blog'>
         <p>Write new blog</p>
         <div>
-            <input type="text" className='new-title' placeholder='Title' />
-            <input type="text" className='new-author' placeholder='Author' />
+          <input type="text" className='new-title' placeholder='Title' />
+          <input type="text" className='new-url' placeholder='Thumbnail Image URL' />
         </div>
-        <input type="text" className='new-url' placeholder='Thumbnail Image URL' />
+        <input type="text" className='new-tags' placeholder='Enter 5 tags realted to the blog'/>
         <br />
         <textarea type="text" className='new-description' placeholder='Description' />
         <button onClick={postNewBlog} >POST</button>

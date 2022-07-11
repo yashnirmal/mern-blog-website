@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import {Routes,Route} from 'react-router-dom';
 import Login from './components/Login';
 import Signin from './components/Signin';
+import MyProfile from './components/MyProfile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/write-new-blog" element={<CreateNewBlog />} />
         <Route path='account/login' element={<Login />}/>
         <Route path='account/signin' element={<Signin />}/>
+        <Route path='account/myprofile/:userid' element={<MyProfile />}/>
       </Routes>
     </div>
   );

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function Signin() {
 
   const [errorMsg,setErrorMsg] = useState('')
+  const navigate= useNavigate();
 
   function signInClicked(){
     const name = document.getElementById('name').value;
@@ -28,6 +29,34 @@ export default function Signin() {
     else if(password!==confirmPass){
       setErrorMsg("Passwords are not matching")
     }
+
+    const userSignin = {
+      name,
+      email,
+      password,
+      imgUrl:"",
+      savedBlogs: [],
+      myBlogs: [],
+      followingUsers: [],
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userSignin),
+    };
+
+    fetch("http://localhost:5000/user",requestOptions)
+    .then(res=>res.json())
+    .then(data=>{
+      console.log(data);
+      if(data.status){
+        navigate("/account/login");
+      }else{
+        setErrorMsg("The email is already registered")
+      }
+    })
+    .catch(err=>setErrorMsg("Something went wrong!"));
   }
 
   return (
@@ -45,11 +74,11 @@ export default function Signin() {
           </div>
           <div>
             <span>Password</span>
-            <input id='password' type="text" placeholder="Password" />
+            <input id='password' type="password" placeholder="Password" />
           </div>
           <div>
             <span>Confirm Password</span>
-            <input id='confirm-pass' type="text" placeholder="Re-enter Password" />
+            <input id='confirm-pass' type="password" placeholder="Re-enter Password" />
           </div>
           <button onClick={signInClicked}>Signin</button>
           <span id='signin-error-message'>{errorMsg}</span>

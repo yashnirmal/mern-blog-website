@@ -1,8 +1,50 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Login.css";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import {login,logout} from "../redux/actions/action.js";
+
 
 export default function Login() {
+
+  const navigate = useNavigate();
+  const [loginErrMsg,setLoginErrMsg] = useState('')
+  const loggedUser = useSelector(state=>state.userReducer);
+  const dispatch = useDispatch();
+
+  function loginBtnClicked(){
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-pass').value;
+    const userLogin ={
+      email,
+      password
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userLogin),
+    };
+
+    fetch("http://localhost:5000/login", requestOptions)
+      .then((res) => {console.log(res); return res.json()})
+      .then((data) => {
+        console.log(data);
+        if (data.status==='ok') {
+          console.log(data)
+          // localStorage.setItem("token", data.user);
+          // const userData={
+
+          // }
+          dispatch(login(data.userData))
+          // localStorage.setItem('loggeduser',data.userData)
+          navigate("/");
+        } else {
+          setLoginErrMsg("Email or password is wrong!");
+        }
+      })
+      .catch((err) => setLoginErrMsg("Something went wrong!"));
+  }
 
   return (
     <div className="login-page">
@@ -11,15 +53,16 @@ export default function Login() {
           <h1>Login</h1>
           <div>
             <span>Email</span>
-            <input type="text" placeholder="E-Mail" />
+            <input id="login-email" type="text" placeholder="E-Mail" />
           </div>
           <div>
             <span>Password</span>
-            <input type="text" placeholder="Password" />
+            <input id="login-pass" type="password" placeholder="Password" />
           </div>
-          <button>Login</button>
+          <button onClick={loginBtnClicked}>Login</button>
+          <span id="signin-error-message">{loginErrMsg}</span>
           <div>
-            <span style={{marginRight:20}}>Not a registered user?</span>
+            <span style={{ marginRight: 20 }}>Not a registered user?</span>
             <Link to="/account/signin">Signin</Link>
           </div>
         </div>

@@ -3,6 +3,8 @@
 :root{
     --primary-color:rgb(169, 58, 58);
     --primary-color-dark: brown;
+    --primary-color-light: rgb(173, 120, 120);
+    --primary-color-lighter: rgb(191, 169, 169);
     --gray:gray;
     --gray-light:rgb(248, 248, 248);
     --red:rgb(224, 86, 86);

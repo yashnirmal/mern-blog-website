@@ -1,0 +1,43 @@
+.my-profile{
+    width:40%;
+    margin: 50px  auto;
+}
+
+.my-profile-user-description{
+    display: flex;
+}
+
+.my-profile-user-img{
+    width: 400px;
+    height: 400px;
+    margin-right: 50px;
+}
+
+.my-profile-user-img>img{
+    width: 100%;
+}
+
+
+.my-profile-user-data{
+    display: flex;
+    flex-direction: column;
+}
+
+.my-profile-user-data>*{
+    margin-bottom: 15px;
+}
+
+.my-profile-user-data>h1{
+    font-size: 3rem;
+}
+
+.my-profile-user-data>span{
+    /* width: 70%; */
+}
+
+.my-profile-user-edit{
+    align-self: flex-end;
+    color: purple;
+    text-decoration: underline;
+    cursor: pointer;
+}
