@@ -35,6 +35,7 @@ export default function Signin() {
       email,
       password,
       imgUrl:"",
+      about:"Nothing to show in About",
       savedBlogs: [],
       myBlogs: [],
       followingUsers: [],

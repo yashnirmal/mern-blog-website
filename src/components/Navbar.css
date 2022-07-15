@@ -38,18 +38,39 @@
 
 .navbar-profile-image-div>img{
     width: 100%;
+    border-radius: 100%;
 }
 
 /* Popover */
 
-.profile-popover-list{
+.profile-popover{
+    z-index:10;
+    background-color: white;
     width: 200px;
-    height: fit-content;
+    height:fit-content;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-35%,10%);
+
+    box-shadow: 0px 0px 20px 5px rgba(22, 22, 22,0.2);
 }
 
+.profile-popover>div{
+    width: 100%;
+    border-radius: 10px;
+    padding: 15px;
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-.profile-popover-list span{
-    margin: auto;
+.profile-popover>div:hover{
+    background-color: var(--gray-light);
+    cursor: pointer;
 }
 
 .popover-logout-btn{

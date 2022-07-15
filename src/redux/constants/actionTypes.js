@@ -1,6 +1,6 @@
 const actionTypes = {
-    LOGIN:"LOGIN",
-    LOGOUT:"LOGOUT"
-}
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
+};
 
 export default actionTypes;

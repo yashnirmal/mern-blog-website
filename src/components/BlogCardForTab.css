@@ -1,0 +1,46 @@
+.blog-card-for-tab{
+    width:100%;
+    height:130px;
+    display:flex;
+    margin-bottom:20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.1);
+}
+
+
+.blog-card-img-for-tab{
+    flex: 3;
+    width:100%;
+    height:100%;
+}
+
+.blog-card-img-for-tab>img{
+    width:100%;
+    height:100%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.blog-card-texts-for-tab{
+    flex: 6;
+    padding:10px;
+}
+
+.blog-card-texts-for-tab>h2{
+    margin-bottom:10px
+}
+
+.tab-blogcard-delete-div{
+    flex: 1;
+    background-color: var(--red-light);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tab-blogcard-delete-div>img{
+    width: 30px;
+}

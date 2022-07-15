@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
 import "./CreateNewBlog.css";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
+
 
 export default function CreateNewBlog() {
 
   const [isError,setIsError] = useState(0);
-  const author = useSelector(state=>state.userReducer).name;
+  const navigate = useNavigate();
+  const author = useSelector(state=>state.userReducer);
+  const dispatch = useDispatch();
 
+  useEffect(()=>{
+    if(!author){
+      console.log(author)
+      navigate("/account/login");
+    }
+  },[])
+
+  
   function postNewBlog(){
     const title = document.querySelector('.new-title').value;
     const tags = document.querySelector(".new-tags").value.split(',');
@@ -21,7 +34,8 @@ export default function CreateNewBlog() {
       title,
       description,
       imgUrl,
-      author,
+      author:author.name,
+      authorId:author.userid,
       postDate,
       tags
     }
@@ -32,13 +46,31 @@ export default function CreateNewBlog() {
       body: JSON.stringify(blog)
     };
 
-    fetch("https://mern-blog-webapp.herokuapp.com/blogs", requestOptions)
+    fetch("http://localhost:5000/blogs", requestOptions)
+      .then((res) => res.json())
+      .then((data) => addBlogToUsersMyBlog(data._id));
+  }
+
+  function addBlogToUsersMyBlog(blogid){
+    const fetchHeader = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({blogid}),
+    };
+
+    fetch("http://localhost:5000/myblog/add", fetchHeader)
       .then((res) => {
-        if (res.ok==true) setIsError(1);
+        if (res.ok == true) setIsError(1);
         else setIsError(-1);
-        return res.json();
-      })
-      .then((data) => console.log(data));
+        return res.json()})
+      .then((data) => {
+        if (data.status === "ok") {
+          console.log("data changed");
+        }
+      });
   }
 
 

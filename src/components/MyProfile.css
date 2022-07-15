@@ -5,16 +5,19 @@
 
 .my-profile-user-description{
     display: flex;
+    margin-bottom:100px;
 }
 
 .my-profile-user-img{
-    width: 400px;
-    height: 400px;
+    width: 200px;
+    height: 200px;
     margin-right: 50px;
+    border-radius:1000px;
 }
 
 .my-profile-user-img>img{
     width: 100%;
+    border-radius: 1000px;
 }
 
 
@@ -40,4 +43,39 @@
     color: purple;
     text-decoration: underline;
     cursor: pointer;
+}
+
+/* change modal */
+.change-data-modal-div{
+    position:fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.change-data-modal-div-container{
+    width:500px;
+    height:500px;
+    background-color: white;
+    padding: 50px;
+    border-radius: 10px;
+}
+
+.change-data-modal-div-container>*{
+    margin-bottom: 20px;
+}
+
+.change-data-modal-div-container>div>span{
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.change-data-modal-div-container>button{
+    margin:0;
 }

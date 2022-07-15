@@ -1,111 +1,140 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import "./MyProfile.css";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-
-function a11yProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
-  };
-}
+import jwt from 'jsonwebtoken';
+import Tabs from "./Tabs";
+import {useNavigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import EmptyProfileIcon from "../assests/empty-user.webp";
+import "./Tabs.css";
 
 
 export default function MyProfile() {
 
-  const [value, setValue] = React.useState(0);
-  const theme = useTheme();
+  const navigate = useNavigate();
+  const userData = useSelector(state=>state.userReducer);
+  const [changeDataComp,setChangeDataComp] = useState(false);
+  const [userAbout,setUserAbout] = useState("");  // state for change popover
+  const [about,setAbout] = useState("");
+  const [image,setImage] = useState("");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  function fetchUserImageAbout(){
+    const fetchHeader = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token"),
+      },
+    };
 
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
+    fetch("http://localhost:5000/user/image/about", fetchHeader)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          setImage(data.reqData.imgUrl)
+          setAbout(data.reqData.about);
+        }
+      });
+  }
+
+  useEffect(()=>{
+    if(!userData){
+      localStorage.removeItem('token');
+      navigate("/account/login");
+    }
+    fetchUserImageAbout();
+  },[])
+
+  
+  function saveChangesToUserData(){
+    const imgUrl=document.getElementById('changed-img-url');
+
+    const changedData = {
+      imgUrl:imgUrl.value,
+      about:userAbout
+    }
+
+    console.log(changedData);
+
+    const fetchHeader = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'x-access-token': localStorage.getItem('token'),
+			},
+			body: JSON.stringify(changedData)
+    }
+
+    fetch("http://localhost:5000/userdatachange",fetchHeader)
+    .then(res=>res.json())
+    .then(data=>{
+      if(data.status==='ok'){
+        console.log("data changed")
+        fetchUserImageAbout();
+      }
+    })
+  }
 
   return (
     <div className="my-profile">
       <div className="my-profile-user-description">
         <div className="my-profile-user-img">
-          <img
-            src="https://yash-nirmal.netlify.app/static/media/me.657695d83be923e0a5d5.png"
-            alt=""
-          />
+          {
+            (!(image===""))?
+            <img
+              src={image}
+              alt="user profile"
+            />:
+            <img
+              src={EmptyProfileIcon}
+              alt="user profile"
+            />
+
+          }
         </div>
         <div className="my-profile-user-data">
-          <h1>Yash Nirmal</h1>
-          <span>
-            Hey I am Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-            Est assumenda iure quas dolore illo dignissimos optio sint rerum
-            itaque. Reprehenderit.
+          <h1>{userData.name}</h1>
+          <span>{about}</span>
+          <span
+            className="my-profile-user-edit"
+            onClick={() => {setChangeDataComp(true); setUserAbout(about)}}
+          >
+            Edit
           </span>
-          <span className="my-profile-user-edit">Edit</span>
         </div>
       </div>
 
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary-color-light"
-          variant="fullWidth"
-          aria-label="full width tabs example"
+      <Tabs />
+
+      {/* Change user data modal */}
+      {changeDataComp ? (
+        <div
+          className="change-data-modal-div"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setChangeDataComp(false);
+          }}
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-        </Tabs>
-      </AppBar>
-      <SwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
-        </TabPanel>
-      </SwipeableViews>
+          <div className="change-data-modal-div-container">
+            <h1>Up for some changes!!!</h1>
+            <div>
+              <span>Profile Image Url</span>
+              <input type="text" placeholder="Profile Image Url" id='changed-img-url' value={image} />
+            </div>
+            <div>
+              <span>Tell us about yourself in less than 200 characters</span>
+              <textarea
+                type="text"
+                id='changed-about'
+                placeholder="Tell us about yourself in less than 200 characters"
+                value={userAbout}
+                onChange={(e)=>{if(!(e.target.value.length>200))setUserAbout(e.target.value)}}
+              />
+            </div>
+            <button onClick={saveChangesToUserData}>Save changes</button>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

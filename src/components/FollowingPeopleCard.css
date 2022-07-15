@@ -1,0 +1,26 @@
+.following-people-card{
+    width:100%;
+    height:50px;
+    padding: 30px 0;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-lighter);
+}
+
+.following-people-card>div{
+    display: flex;
+    align-items: center;
+}
+
+.following-people-card>div>img{
+    width: 40px;
+    border-radius: 1000px;
+    margin-right: 10px;
+}
+
+.following-people-card>button{
+    width: fit-content;
+    background-color: white;
+    color: var(--primary-color);
+}

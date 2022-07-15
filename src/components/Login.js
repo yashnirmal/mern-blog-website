@@ -3,6 +3,8 @@ import "./Login.css";
 import {Link, useNavigate} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import {login,logout} from "../redux/actions/action.js";
+import jwt from 'jsonwebtoken';
+
 
 
 export default function Login() {
@@ -30,14 +32,9 @@ export default function Login() {
       .then((res) => {console.log(res); return res.json()})
       .then((data) => {
         console.log(data);
-        if (data.status==='ok') {
-          console.log(data)
-          // localStorage.setItem("token", data.user);
-          // const userData={
-
-          // }
-          dispatch(login(data.userData))
-          // localStorage.setItem('loggeduser',data.userData)
+        if (data.status==='ok' && data.user) {
+          dispatch(login(jwt.decode(data.user)))
+          localStorage.setItem('token',data.user)
           navigate("/");
         } else {
           setLoginErrMsg("Email or password is wrong!");
@@ -53,7 +50,7 @@ export default function Login() {
           <h1>Login</h1>
           <div>
             <span>Email</span>
-            <input id="login-email" type="text" placeholder="E-Mail" />
+            <input id="login-email" type="email" placeholder="E-Mail" />
           </div>
           <div>
             <span>Password</span>

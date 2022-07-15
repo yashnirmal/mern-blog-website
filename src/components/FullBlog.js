@@ -1,16 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import "./FullBlog.css";
 import { useParams } from "react-router-dom";
 import AuthorProfile from './AuthorProfile';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import BookMark from "../assests/bookmark.png";
+import BookMarkFilled from "../assests/bookmark-filled.png";
+
 
 export default function FullBlog() {
 
   const blogId = useParams().id;
   const [blog,setBlog] = useState(null);
+  const [blogSaved,setBlogSaved] = useState(false);
+  const [savedBlogs, setSavedBlogs] = useState([]);
+
+  function fetchUsersSavedBlogs() {
+    const fetchHeader = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token"),
+      },
+    };
+
+    fetch("http://localhost:5000/savedblogs", fetchHeader)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          setSavedBlogs(data.reqData.savedBlogs);
+        }
+      });
+  }
+  
 
   useState(()=>{
     console.log(blogId);
+    fetchUsersSavedBlogs();
 
     async function fetchSingleBlog(){
       await fetch("https://mern-blog-webapp.herokuapp.com/blogs/"+blogId)
@@ -24,6 +49,38 @@ export default function FullBlog() {
     fetchSingleBlog();
   })
 
+  useEffect(()=>{
+    if (savedBlogs.includes(blogId)) {
+      setBlogSaved(true);
+    }
+  },[savedBlogs])
+
+  function bookMarkThisBlog(){
+    if(blogSaved) return ;
+    
+    setBlogSaved(true);
+    const fetchHeader = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ blogid:blogId}),
+    };
+
+    fetch("http://localhost:5000/blog/bookmark/add", fetchHeader)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          console.log("data changed");
+        }
+        else{
+          setBlogSaved(false);
+        }
+      });
+  }
+
+
   return (
     (!blog)?
     <div style={{width:"100vw",marginTop:200,textAlign:"center"}}>
@@ -32,7 +89,14 @@ export default function FullBlog() {
     <div className='fullblog'>
         <div className='authod-date-div'>
             <span>By: {blog.author}</span>
-            <span>7 days ago</span>
+            <div>
+              {
+                (blogSaved)?
+                <img src={BookMarkFilled} alt="" />:
+                <img src={BookMark} onClick={bookMarkThisBlog} alt="" />
+              }
+              <span>{blog.postDate}</span>
+            </div>
         </div>
 
         <div className='fullblog-div'>
@@ -41,7 +105,7 @@ export default function FullBlog() {
             <p className='blog-description'>{blog.description}</p>
         </div>
 
-        <AuthorProfile />
+        <AuthorProfile authorid={blog.authorId}/>
     </div>
   )
 }

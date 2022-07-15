@@ -11,7 +11,7 @@ export default function BlogCard(props) {
     <div className="blogcard">
       <img className="thumbnail" src={imgUrl} alt="img" />
       <div className="blog-card-data">
-        <p className="heading">{title}</p>
+        <p className="heading">{(title.length>25)?title.substring(0, 30) + "...":title}</p>
         <div className="description">
           <span>{description.substring(0,220) + "..."}</span>
           <button onClick={() => navigate("/blog/"+_id)}>read more</button>

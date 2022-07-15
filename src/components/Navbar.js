@@ -1,48 +1,47 @@
 import React,{useEffect,useState} from 'react';
 import "./Navbar.css";
-import Popover from "@material-ui/core/Popover";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
 import { Link, useNavigate } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import {useSelector,useDispatch} from 'react-redux';
-import { logout } from '../redux/actions/action';
+import { login, logout } from '../redux/actions/action';
+import EmptyProfileIcon from "../assests/empty-user.webp";
 
 
 export default function Navbar() {
-
+  // Popover stuff
+  const [popoverOpen,setPopoverOpen] = useState(false);
   const navigate = useNavigate();
-  const loggedUser = useSelector(state=>state.userReducer);
+  const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-  function myProfileBtnClicked(){
-    const token = localStorage.getItem('token');
-    if(token){
-      const user = jwt.decode(token)
-      if(!user){
-        localStorage.removeItem('token');
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userData = jwt.decode(token);
+      if (!userData) {
+        localStorage.removeItem("token");
+        navigate("/");
+      } else {
+        dispatch(login(userData));
       }
-      else{
+    }
+  }, []);
+
+
+  function myProfileBtnClicked() {
+    setPopoverOpen(false)
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userData = jwt.decode(token);
+      if (!userData) {
+        localStorage.removeItem("token");
+      } else {
         // populate code or something redux-state
-        navigate("/myprofile")
+        navigate(`account/myprofile/${userData.userid}`);
       }
     }
   }
-
-  // Popover stuff
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleProfileClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleProfileClose = () => {
-    setAnchorEl(null);
-  };
-
-  const popoverOpen = Boolean(anchorEl);
-  const id = popoverOpen ? "simple-popover" : undefined;
 
 
   return (
@@ -53,52 +52,51 @@ export default function Navbar() {
       <div className="navbar-login-signin-div">
         <Link to="/write-new-blog">Write a blog</Link>
 
-      {(!loggedUser)?
-        (<>
-          <Link to="/account/login">Login</Link>
-          <button onClick={()=>navigate("/account/signin")}>Sign In</button>
-        </>):
-        <div className="navbar-profile-image-div">
-          <img
-            src="https://yash-nirmal.netlify.app/static/media/me.657695d83be923e0a5d5.png"
-            alt=""
-            onClick={handleProfileClick}
-          />
-          
-          
-          <Popover
-            id={id}
-            open={popoverOpen}
-            anchorEl={anchorEl}
-            onClose={handleProfileClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
+        {!userData ? (
+          <>
+            <Link to="/account/login">Login</Link>
+            <button onClick={() => navigate("/account/signin")}>Sign In</button>
+          </>
+        ) : (
+          <div
+            className="navbar-profile-image-div"
+            onClick={()=>setPopoverOpen(!popoverOpen)}
           >
-            <List
-              component="nav"
-              aria-label="mailbox folders"
-              className='profile-popover-list'
-            >
-              <ListItem button>
-                <span onClick={myProfileBtnClicked}>Profile</span>
-              </ListItem>
-              <Divider />
-              <ListItem button >
-                <span className='popover-logout-btn' onClick={()=>dispatch(logout())}>Logout</span>
-              </ListItem>
-            </List>
-          </Popover>
-        </div> 
-      }   
-       
-      </div>
+            {!(userData.imgUrl === "") ? (
+              <img src={userData.imgUrl} alt="user profile" />
+            ) : (
+              <img src={EmptyProfileIcon} alt="user profile" />
+            )}
 
+              {/* Popover */}
+            {
+              (popoverOpen)?
+            <div className="profile-popover">
+              <div
+                button
+                onClick={() => {
+                  myProfileBtnClicked();
+                }}
+              >
+                <span>Profile</span>
+              </div>
+              <div
+                button
+                onClick={() => {
+                  setPopoverOpen(false);
+                  localStorage.removeItem("token");
+                  dispatch(logout());
+                  navigate("/");
+                }}
+                className="popover-logout-btn"
+              >
+                <span>Logout</span>
+              </div>
+            </div>:<></>
+              }
+          </div>
+        )}
+      </div>
     </div>
   );
 }

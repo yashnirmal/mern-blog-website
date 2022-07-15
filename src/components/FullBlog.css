@@ -10,6 +10,17 @@
     width: 100%;
 }
 
+.authod-date-div>div{
+    display:flex;
+    align-items: center;
+}
+
+.authod-date-div>div>img{
+    width: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
 .fullblog-div{
     width: 100%;
     text-align: left;
