@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react';
 import "./Tabs.css";
 import BlogCardForTab from './BlogCardForTab';
 import FollowingPeopleCard from './FollowingPeopleCard';
+import baseApiUrl from "./baseApiUrl";
 
 export default function Tabs(props) {
 
