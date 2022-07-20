@@ -1,11 +1,11 @@
 import React, { useState,useEffect } from 'react';
 import "./MyProfile.css";
-import jwt from 'jsonwebtoken';
 import Tabs from "./Tabs";
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import EmptyProfileIcon from "../assests/empty-user.webp";
 import "./Tabs.css";
+import baseApiUrl from "./baseApiUrl"
 
 
 export default function MyProfile() {
@@ -26,7 +26,7 @@ export default function MyProfile() {
       },
     };
 
-    fetch("http://localhost:5000/user/image/about", fetchHeader)
+    fetch(`${baseApiUrl}/user/image/about`, fetchHeader)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "ok") {
@@ -64,7 +64,7 @@ export default function MyProfile() {
 			body: JSON.stringify(changedData)
     }
 
-    fetch("http://localhost:5000/userdatachange",fetchHeader)
+    fetch(`${baseApiUrl}/userdatachange`,fetchHeader)
     .then(res=>res.json())
     .then(data=>{
       if(data.status==='ok'){

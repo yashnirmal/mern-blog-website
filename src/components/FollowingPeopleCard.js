@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import "./FollowingPeopleCard.css";
 import {useNavigate} from 'react-router-dom';
+import baseApiUrl from "./baseApiUrl";
 
 
 export default function FollowingPeopleCard(props) {
@@ -9,7 +10,7 @@ export default function FollowingPeopleCard(props) {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/user/${props.userid}`)
+        fetch(`${baseApiUrl}/user/${props.userid}`)
         .then((res) => res.json())
         .then((data) => setUserData(data.uData));
     },[]);
@@ -24,7 +25,7 @@ export default function FollowingPeopleCard(props) {
       body: JSON.stringify({authorid:userData._id}),
     };
 
-    fetch("http://localhost:5000/remove/following", fetchHeader)
+    fetch(`${baseApiUrl}/remove/following`, fetchHeader)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "ok") {

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import baseApiUrl from "./baseApiUrl";
+
 
 export default function FollowBtn(props) {
   const loggedUser = useSelector((state) => state.userReducer);
@@ -15,7 +17,7 @@ export default function FollowBtn(props) {
       },
     };
 
-    fetch("http://localhost:5000/followings", fetchHeader)
+    fetch(`${baseApiUrl}/followings`, fetchHeader)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "ok") {
@@ -41,7 +43,7 @@ export default function FollowBtn(props) {
       body: JSON.stringify({ authorid: props.userid}),
     };
 
-    fetch("http://localhost:5000/add/following", fetchHeader)
+    fetch(`${baseApiUrl}/add/following`, fetchHeader)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "ok") {

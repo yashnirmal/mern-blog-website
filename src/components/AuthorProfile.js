@@ -3,6 +3,7 @@ import "./AuthoreProfile.css";
 import { useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import FollowBtn from './FollowBtn';
+import baseApiUrl from "./baseApiUrl";
 
 export default function AuthorProfile(props) {
 
@@ -15,7 +16,7 @@ export default function AuthorProfile(props) {
   useEffect(()=>{
 
     async function fetchAuthorDetails(){
-      await fetch(`http://localhost:5000/user/${props.authorid}`)
+      await fetch(`${baseApiUrl}/user/${props.authorid}`)
       .then((res) => res.json())
       .then((data) =>{
         setAuthor(data.uData);

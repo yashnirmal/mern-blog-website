@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import "./CreateNewBlog.css";
 import { Link } from 'react-router-dom';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import { useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
+import baseApiUrl from "./baseApiUrl";
 
 
 export default function CreateNewBlog() {
@@ -11,7 +12,6 @@ export default function CreateNewBlog() {
   const [isError,setIsError] = useState(0);
   const navigate = useNavigate();
   const author = useSelector(state=>state.userReducer);
-  const dispatch = useDispatch();
 
   useEffect(()=>{
     if(!author){
@@ -46,7 +46,7 @@ export default function CreateNewBlog() {
       body: JSON.stringify(blog)
     };
 
-    fetch("http://localhost:5000/blogs", requestOptions)
+    fetch(`${baseApiUrl}/blogs`, requestOptions)
       .then((res) => res.json())
       .then((data) => addBlogToUsersMyBlog(data._id));
   }
@@ -61,7 +61,7 @@ export default function CreateNewBlog() {
       body: JSON.stringify({blogid}),
     };
 
-    fetch("http://localhost:5000/myblog/add", fetchHeader)
+    fetch(`${baseApiUrl}/myblog/add`, fetchHeader)
       .then((res) => {
         if (res.ok == true) setIsError(1);
         else setIsError(-1);

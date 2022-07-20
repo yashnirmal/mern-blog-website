@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import BlogCard from './BlogCard';
 import FilterComp from './FilterComp';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import baseApiUrl from './baseApiUrl';
+
 
 export default function BlogContainer() {
 
@@ -10,10 +12,12 @@ export default function BlogContainer() {
   useEffect(()=>{
 
     async function fetchBlogs(){
-      await fetch("https://mern-blog-webapp.herokuapp.com/blogs")
-      .then((res) => res.json())
-      .then(data=>{setAllBlogs(data)
-      console.log(data)});
+      await fetch(`${baseApiUrl}/blogs`)
+        .then((res) => res.json())
+        .then((data) => {
+          setAllBlogs(data);
+          console.log(data);
+        });
     }
 
     fetchBlogs();

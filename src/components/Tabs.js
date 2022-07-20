@@ -19,13 +19,13 @@ export default function Tabs(props) {
         },
       };
 
-      fetch("http://localhost:5000/followings", fetchHeader)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === "ok") {
-          setFollowingUsers(data.reqData.followingUsers);
-        }
-      });
+      fetch(`${baseApiUrl}/followings`, fetchHeader)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "ok") {
+            setFollowingUsers(data.reqData.followingUsers);
+          }
+        });
     }
 
     function fecthUsersMyBlogs(){
@@ -37,7 +37,7 @@ export default function Tabs(props) {
         },
       };
 
-      fetch("http://localhost:5000/myblogs", fetchHeader)
+      fetch(`${baseApiUrl}/myblogs`, fetchHeader)
         .then((res) => res.json())
         .then((data) => {
           if (data.status === "ok") {
@@ -55,11 +55,11 @@ export default function Tabs(props) {
         },
       };
 
-      fetch("http://localhost:5000/savedblogs", fetchHeader)
+      fetch(`${baseApiUrl}/savedblogs`, fetchHeader)
         .then((res) => res.json())
         .then((data) => {
           if (data.status === "ok") {
-            setSavedBlogs(data.reqData.savedBlogs)
+            setSavedBlogs(data.reqData.savedBlogs);
           }
         });
     }

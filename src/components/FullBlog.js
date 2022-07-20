@@ -5,6 +5,7 @@ import AuthorProfile from './AuthorProfile';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import BookMark from "../assests/bookmark.png";
 import BookMarkFilled from "../assests/bookmark-filled.png";
+import baseApiUrl from './baseApiUrl';
 
 
 export default function FullBlog() {
@@ -23,7 +24,7 @@ export default function FullBlog() {
       },
     };
 
-    fetch("http://localhost:5000/savedblogs", fetchHeader)
+    fetch(`${baseApiUrl}/savedblogs`, fetchHeader)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "ok") {
@@ -37,7 +38,7 @@ export default function FullBlog() {
     fetchUsersSavedBlogs();
 
     async function fetchSingleBlog(){
-      await fetch("https://mern-blog-webapp.herokuapp.com/blogs/"+blogId)
+      await fetch(`${baseApiUrl}/blogs/${blogId}`)
       .then((res) => res.json())
       .then((data) => {
         setBlog(data);
@@ -66,7 +67,7 @@ export default function FullBlog() {
       body: JSON.stringify({ blogid:blogId}),
     };
 
-    fetch("http://localhost:5000/blog/bookmark/add", fetchHeader)
+    fetch(`${baseApiUrl}/blog/bookmark/add`, fetchHeader)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "ok") {

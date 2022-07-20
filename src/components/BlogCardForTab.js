@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import "./BlogCardForTab.css";
 import DeleteIcon from "../assests/delete.png";
 import {useNavigate} from 'react-router-dom';
+import baseApiUrl from "./baseApiUrl";
+
 
 export default function BlogCardForTab(props) {
 
@@ -10,7 +12,7 @@ export default function BlogCardForTab(props) {
 
   useEffect(()=>{
 
-    fetch(`http://localhost:5000/blogs/${props.blogid}`)
+    fetch(`${baseApiUrl}/blogs/${props.blogid}`)
     .then(res=>res.json())
     .then(data=>setBlogData(data));
 
@@ -26,7 +28,7 @@ export default function BlogCardForTab(props) {
       body: JSON.stringify({ blogid: props.blogid }),
     };
 
-    fetch("http://localhost:5000/blog/bookmark/remove", fetchHeader)
+    fetch(`${baseApiUrl}/blog/bookmark/remove`, fetchHeader)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "ok") {
@@ -46,7 +48,7 @@ export default function BlogCardForTab(props) {
       body: JSON.stringify({ blogid: props.blogid }),
     };
 
-    fetch("http://localhost:5000/blogs/delete", fetchHeader)
+    fetch(`${baseApiUrl}/blogs/delete`, fetchHeader)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "ok") {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
+import baseApiUrl from './baseApiUrl';
 
 
 export default function Signin() {
@@ -47,7 +48,7 @@ export default function Signin() {
       body: JSON.stringify(userSignin),
     };
 
-    fetch("http://localhost:5000/user",requestOptions)
+    fetch(`${baseApiUrl}/user`,requestOptions)
     .then(res=>res.json())
     .then(data=>{
       console.log(data);

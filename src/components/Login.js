@@ -4,6 +4,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import {login,logout} from "../redux/actions/action.js";
 import jwt from 'jsonwebtoken';
+import baseApiUrl from './baseApiUrl';
 
 
 
@@ -28,7 +29,7 @@ export default function Login() {
       body: JSON.stringify(userLogin),
     };
 
-    fetch("http://localhost:5000/login", requestOptions)
+    fetch(`${baseApiUrl}/login`, requestOptions)
       .then((res) => {console.log(res); return res.json()})
       .then((data) => {
         console.log(data);

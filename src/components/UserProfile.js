@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "./MyProfile.css";
 import FollowBtn from './FollowBtn';
+import baseApiUrl from "./baseApiUrl";
 
 export default function UserProfile() {
 
@@ -12,13 +13,13 @@ export default function UserProfile() {
     const [userData,setUserData] = useState(null);
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/user/${userid}`)
-        .then(res=>res.json())
-        .then(data=>{
-            if(data.status==='ok'){
-                setUserData(data.uData);
+        fetch(`${baseApiUrl}/user/${userid}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.status === "ok") {
+              setUserData(data.uData);
             }
-        })
+          });
     },[])
 
     console.log(userData);
