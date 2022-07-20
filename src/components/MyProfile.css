@@ -1,5 +1,5 @@
 .my-profile{
-    width:40%;
+    width:650px;
     margin: 50px  auto;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .my-profile-user-img>img{
-    width: 100%;
+    height: 100%;
     border-radius: 1000px;
 }
 
@@ -78,4 +78,31 @@
 
 .change-data-modal-div-container>button{
     margin:0;
+}
+
+/* Userprofile css from here on */
+.users-myblogs{
+    width:100%;
+    margin-top: 50px;
+    /* text-align:center; */
+}
+
+.users-myblogs>div{
+    width: 100%;
+    padding: 5px 0;
+    background: rgba(128, 128, 128, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.274);
+}
+
+.users-myblogs>div>span{
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding:20px;
+}
+
+.users-blog-cont{
+    height:500px;
+    overflow-y: scroll;
+    background-color: #fff !important;
+    padding:20px 20px !important;
 }

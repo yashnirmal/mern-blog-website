@@ -6,6 +6,7 @@ import {Routes,Route} from 'react-router-dom';
 import Login from './components/Login';
 import Signin from './components/Signin';
 import MyProfile from './components/MyProfile';
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='account/login' element={<Login />}/>
         <Route path='account/signin' element={<Signin />}/>
         <Route path='account/myprofile/:userid' element={<MyProfile />}/>
+        <Route path='account/user/:userid' element={<UserProfile />}/>
       </Routes>
     </div>
   );

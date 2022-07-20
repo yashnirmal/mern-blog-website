@@ -119,7 +119,7 @@ export default function Tabs(props) {
             <h4>You haven't written any blog yet</h4>
           ) : (
             myBlogs.map((el, index) => (
-              <BlogCardForTab blogid={el} blogType="MyBlog" fecthUsersMyBlogs={fecthUsersMyBlogs} />
+              <BlogCardForTab blogid={el} showdelbtn = {true} fecthUsersMyBlogs={fecthUsersMyBlogs} />
             ))
           )}
         </div>
@@ -131,7 +131,7 @@ export default function Tabs(props) {
             <h4>You don't have any saved blogs yet</h4>
           ) : (
             savedBlogs.map((el, index) => (
-              <BlogCardForTab blogid={el} blogType="SavedBlog" fetchUsersSavedBlogs={fetchUsersSavedBlogs} />
+              <BlogCardForTab blogid={el} showdelbtn={true} fetchUsersSavedBlogs={fetchUsersSavedBlogs} />
             ))
           )}
         </div>

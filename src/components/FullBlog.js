@@ -34,7 +34,6 @@ export default function FullBlog() {
   
 
   useState(()=>{
-    console.log(blogId);
     fetchUsersSavedBlogs();
 
     async function fetchSingleBlog(){
@@ -42,7 +41,6 @@ export default function FullBlog() {
       .then((res) => res.json())
       .then((data) => {
         setBlog(data);
-        console.log(data);
       });
     }
 

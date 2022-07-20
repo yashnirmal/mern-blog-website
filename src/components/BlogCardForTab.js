@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import "./BlogCardForTab.css";
 import DeleteIcon from "../assests/delete.png";
+import {useNavigate} from 'react-router-dom';
 
 export default function BlogCardForTab(props) {
 
   const [blogData,setBlogData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(()=>{
 
@@ -59,21 +61,24 @@ export default function BlogCardForTab(props) {
   ) : (
     <div className="blog-card-for-tab">
       <div className="blog-card-img-for-tab">
-        <img src={blogData.imgUrl} alt="" />
+        <img src={blogData.imgUrl} alt=""  onClick={()=>navigate(`/blog/${blogData._id}`)}/>
       </div>
       <div className="blog-card-texts-for-tab">
-        <h2>{(blogData.title.length>25)?blogData.title.substring(0, 25) + "...":blogData.title}</h2>
+        <h2 onClick={()=>navigate(`/blog/${blogData._id}`)}>{(blogData.title.length>25)?blogData.title.substring(0, 25) + "...":blogData.title}</h2>
         <span>{blogData.description.substring(0, 160) + "..."}</span>
       </div>
-      <div className="tab-blogcard-delete-div" onClick={()=>{
-        if(props.blogType==="MyBlog"){
-          deleteBlog();
-        }else if ((props.blogType === "SavedBlog")) {
-          removeFromSavedBlog();
-        }
-      }}>
+      {
+        (props.showdelbtn)?
+        <div className="tab-blogcard-delete-div" onClick={()=>{
+          if(props.blogType==="MyBlog"){
+            deleteBlog();
+          }else if ((props.blogType === "SavedBlog")) {
+            removeFromSavedBlog();
+          }
+        }}>
         <img src={DeleteIcon} alt="" />
-      </div>
+        </div>:<></>
+      }
     </div>
   );
 }

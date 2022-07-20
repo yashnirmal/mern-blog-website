@@ -1,14 +1,17 @@
 import React, { useEffect,useState } from 'react';
 import "./FollowingPeopleCard.css";
+import {useNavigate} from 'react-router-dom';
+
 
 export default function FollowingPeopleCard(props) {
 
     const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         fetch(`http://localhost:5000/user/${props.userid}`)
         .then((res) => res.json())
-        .then((data) => setUserData(data));
+        .then((data) => setUserData(data.uData));
     },[]);
 
   function removeFromFollowings(){
@@ -21,7 +24,7 @@ export default function FollowingPeopleCard(props) {
       body: JSON.stringify({authorid:userData._id}),
     };
 
-    fetch("http://localhost:5000/following/remove", fetchHeader)
+    fetch("http://localhost:5000/remove/following", fetchHeader)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "ok") {
@@ -32,15 +35,19 @@ export default function FollowingPeopleCard(props) {
   }
 
 
-  return (
-    (!userData)?<></>:
+  return !userData ? (
+    <></>
+  ) : (
     <div className="following-people-card">
       <div>
         <img
           src={userData.imgUrl}
           alt=""
+          onClick={() => navigate(`/account/user/${userData._id}`)}
         />
-        <h3>{userData.name}</h3>
+        <h3 onClick={() => navigate(`/account/user/${userData._id}`)}>
+          {userData.name}
+        </h3>
       </div>
       <button onClick={removeFromFollowings}>Unfollow</button>
     </div>
