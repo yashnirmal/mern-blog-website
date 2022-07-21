@@ -47,7 +47,7 @@ export default function Navbar() {
   return (
     <div className="navbar">
       <Link to="/" className="title">
-        Blogger
+        BlogGator
       </Link>
       <div className="navbar-login-signin-div">
         <Link to="/write-new-blog">Write a blog</Link>
