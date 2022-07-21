@@ -23,6 +23,7 @@ export default function BlogCardForTab(props) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'Accept': 'application/json',
         "x-access-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ blogid: props.blogid }),

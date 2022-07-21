@@ -20,6 +20,7 @@ export default function FullBlog() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
         "x-access-token": localStorage.getItem("token"),
       },
     };
@@ -62,9 +63,10 @@ export default function FullBlog() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
         "x-access-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify({ blogid:blogId}),
+      body: JSON.stringify({ blogid: blogId }),
     };
 
     fetch(`${baseApiUrl}/blog/bookmark/add`, fetchHeader)

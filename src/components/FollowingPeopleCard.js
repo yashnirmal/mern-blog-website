@@ -20,9 +20,10 @@ export default function FollowingPeopleCard(props) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
         "x-access-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify({authorid:userData._id}),
+      body: JSON.stringify({ authorid: userData._id }),
     };
 
     fetch(`${baseApiUrl}/remove/following`, fetchHeader)

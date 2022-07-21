@@ -13,6 +13,7 @@ export default function FollowBtn(props) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        'Accept': 'application/json',
         "x-access-token": localStorage.getItem("token"),
       },
     };
@@ -38,6 +39,7 @@ export default function FollowBtn(props) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'Accept': 'application/json',
         "x-access-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ authorid: props.userid}),

@@ -22,6 +22,7 @@ export default function MyProfile() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
         "x-access-token": localStorage.getItem("token"),
       },
     };
@@ -56,13 +57,14 @@ export default function MyProfile() {
     console.log(changedData);
 
     const fetchHeader = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'x-access-token': localStorage.getItem('token'),
-			},
-			body: JSON.stringify(changedData)
-    }
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        "x-access-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify(changedData),
+    };
 
     fetch(`${baseApiUrl}/userdatachange`,fetchHeader)
     .then(res=>res.json())

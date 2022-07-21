@@ -16,6 +16,7 @@ export default function Tabs(props) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
           "x-access-token": localStorage.getItem("token"),
         },
       };
@@ -34,6 +35,7 @@ export default function Tabs(props) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
           "x-access-token": localStorage.getItem("token"),
         },
       };
@@ -52,6 +54,7 @@ export default function Tabs(props) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
           "x-access-token": localStorage.getItem("token"),
         },
       };
