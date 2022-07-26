@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {login,logout} from "../redux/actions/action.js";
 import jwt from 'jsonwebtoken';
 import baseApiUrl from './baseApiUrl';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 
 
@@ -16,6 +17,7 @@ export default function Login() {
   const dispatch = useDispatch();
 
   function loginBtnClicked(){
+    setLoginErrMsg("Fetching Your Details...")
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-pass').value;
     const userLogin ={
@@ -25,15 +27,14 @@ export default function Login() {
 
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      "Accept": "application/json",
+      headers: { "Content-Type": "application/json",
+        "Accept" :"application/json"},
       body: JSON.stringify(userLogin),
     };
 
     fetch(`${baseApiUrl}/login`, requestOptions)
-      .then((res) => {console.log(res); return res.json()})
+      .then((res) =>res.json())
       .then((data) => {
-        console.log(data);
         if (data.status==='ok' && data.user) {
           dispatch(login(jwt.decode(data.user)))
           localStorage.setItem('token',data.user)
@@ -42,7 +43,8 @@ export default function Login() {
           setLoginErrMsg("Email or password is wrong!");
         }
       })
-      .catch((err) => setLoginErrMsg("Something went wrong!"));
+      .catch((err) => setLoginErrMsg("Something went wrong!!!"));
+
   }
 
   return (
@@ -56,7 +58,7 @@ export default function Login() {
           </div>
           <div>
             <span>Password</span>
-            <input id="login-pass" type="password" placeholder="Password" />
+            <input id="login-pass" type="password" placeholder="Password" onKeyDown={(e)=>{if(e.keyCode===13)loginBtnClicked()}}/>
           </div>
           <button onClick={loginBtnClicked}>Login</button>
           <span id="signin-error-message">{loginErrMsg}</span>

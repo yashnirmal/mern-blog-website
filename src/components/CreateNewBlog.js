@@ -5,11 +5,14 @@ import { useSelector} from 'react-redux';
 import { useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import baseApiUrl from "./baseApiUrl";
+import ReactMarkdown from "react-markdown";
+
 
 
 export default function CreateNewBlog() {
 
   const [isError,setIsError] = useState(0);
+  const [previewModal,setPreviewModal] = useState(false);
   const navigate = useNavigate();
   const author = useSelector(state=>state.userReducer);
 
@@ -80,7 +83,10 @@ export default function CreateNewBlog() {
 
   return (
     <div className='create-new-blog'>
-        <p>Write new blog</p>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+          <h3>Write new blog</h3>
+          <span style={{opacity:0.8}}>Use <a target="_blank" href="https://www.markdownguide.org/basic-syntax/">Markdown</a> syntax to write the blog</span>
+        </div>
         <div>
           <input type="text" className='new-title' placeholder='Title' />
           <input type="text" className='new-url' placeholder='Thumbnail Image URL' />
@@ -88,7 +94,23 @@ export default function CreateNewBlog() {
         <input type="text" className='new-tags' placeholder='Enter 5 tags realted to the blog'/>
         <br />
         <textarea type="text" className='new-description' placeholder='Description' />
-        <button onClick={postNewBlog} >POST</button>
+        <div className="post-preview-btn-container">
+          <button className='post-new-blog' onClick={postNewBlog} >POST</button>
+          <button className='preview-blog-btn' onClick={()=>setPreviewModal(true)}>Preview</button>
+        </div>
+
+        {/* Preview Modal */
+          (previewModal)?
+          <div className='blog-preview-modal' onClick={(e)=>(e.target==e.currentTarget)?setPreviewModal(false):setPreviewModal(previewModal)}>
+            <div>
+            <h1 style={{marginBottom:30}}>{document.querySelector(".new-title").value}</h1>
+              <ReactMarkdown>
+                {document.querySelector(".new-description").value}
+              </ReactMarkdown>
+            </div>
+          </div>
+          :<></>
+        }
 
         {/* Success div */
         (isError===1)?(<div className='post-success-div'>

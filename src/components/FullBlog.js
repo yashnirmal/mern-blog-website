@@ -6,6 +6,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import BookMark from "../assests/bookmark.png";
 import BookMarkFilled from "../assests/bookmark-filled.png";
 import baseApiUrl from './baseApiUrl';
+import ReactMarkdown from "react-markdown";
 
 
 export default function FullBlog() {
@@ -103,7 +104,7 @@ export default function FullBlog() {
         <div className='fullblog-div'>
             <img src={blog.imgUrl} alt="" />
             <p className='blog-title'>{blog.title}</p>
-            <p className='blog-description'>{blog.description}</p>
+            <p className='blog-description'><ReactMarkdown>{blog.description}</ReactMarkdown></p>
         </div>
 
         <AuthorProfile authorid={blog.authorId}/>

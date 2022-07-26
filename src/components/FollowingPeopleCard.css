@@ -17,6 +17,11 @@
     width: 40px;
     border-radius: 1000px;
     margin-right: 10px;
+    cursor: pointer;
+}
+
+.following-people-card>div>h3{
+    cursor: pointer;
 }
 
 .following-people-card>button{

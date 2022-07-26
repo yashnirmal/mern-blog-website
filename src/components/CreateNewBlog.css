@@ -45,3 +45,56 @@
     cursor: pointer;
     color: blue;
 }
+
+.post-preview-btn-container{
+    width: 100%;
+}
+/* 
+.post-new-blog:hover::after{
+    transition-delay: 0.2s;
+} */
+/* 
+.post-new-blog:hover::after{
+    align-self: flex-end;
+    content: " ➜";
+} */
+
+.post-preview-btn-container>button{
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.preview-blog-btn{
+    background-color: var(--primary-color-less-opacity);
+    color: var(--primary-color);
+}
+
+.preview-blog-btn:hover{
+    background-color: var(--primary-color-less-opacity);
+}
+
+/* Preview Modal */
+.blog-preview-modal{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0,0.4);
+}
+
+.blog-preview-modal>div{
+    width: 650px;
+    height: 80%;
+    overflow-y: scroll;
+    background-color: white;
+    padding: 30px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}

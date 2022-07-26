@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import {useSelector,useDispatch} from 'react-redux';
 import { login, logout } from '../redux/actions/action';
 import EmptyProfileIcon from "../assests/empty-user.webp";
+import baseApiUrl from './baseApiUrl';
 
 
 export default function Navbar() {
@@ -13,7 +14,26 @@ export default function Navbar() {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+  const [image,setImage] = useState(null);
 
+  function fetchUserImageAbout() {
+    const fetchHeader = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "x-access-token": localStorage.getItem("token"),
+      },
+    };
+
+    fetch(`${baseApiUrl}/user/image/about`, fetchHeader)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          setImage(data.reqData.imgUrl);
+        }
+      });
+  }
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -24,6 +44,7 @@ export default function Navbar() {
         navigate("/");
       } else {
         dispatch(login(userData));
+        fetchUserImageAbout();
       }
     }
   }, []);
@@ -62,8 +83,8 @@ export default function Navbar() {
             className="navbar-profile-image-div"
             onClick={()=>setPopoverOpen(!popoverOpen)}
           >
-            {!(userData.imgUrl === "") ? (
-              <img src={userData.imgUrl} alt="user profile" />
+            {(image !== null) ? (
+              <img src={image} alt="user profile" />
             ) : (
               <img src={EmptyProfileIcon} alt="user profile" />
             )}

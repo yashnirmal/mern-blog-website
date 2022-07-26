@@ -10,6 +10,7 @@ export default function Signin() {
   const navigate= useNavigate();
 
   function signInClicked(){
+    setErrorMsg("Making a new account for you...")
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -17,18 +18,23 @@ export default function Signin() {
 
     if(name===""){
       setErrorMsg("Name cannot be empty")
+      return;
     }
     else if(email===''){
       setErrorMsg("Email cannot be empty")
+      return;
     }
     else if(password===''){
       setErrorMsg("Please set a password")
+      return;
     }
     else if(password.length<=5){
       setErrorMsg("Password should be more than 5 characters long")
+      return;
     }
     else if(password!==confirmPass){
       setErrorMsg("Passwords are not matching")
+      return;
     }
 
     const userSignin = {

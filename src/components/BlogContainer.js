@@ -23,6 +23,24 @@ export default function BlogContainer() {
     fetchBlogs();
   },[])
 
+  // function filterBlogsUsingTags(arr){
+  //   let filteredBlogs = []
+  //   console.log(arr)
+
+  //   if(arr.length===0 || arr[0]=='')
+  //   return allBlogs
+
+  //   allBlogs.forEach((blog)=>{
+  //     blog.tags.forEach((tag)=>{
+  //       console.log(tag)
+  //       if(arr.includes(tag))
+  //         filteredBlogs.push(blog)
+  //         console.log(filteredBlogs)
+  //     })
+  //   })
+  //   return filteredBlogs;
+  // }
+
 
   return (
     <>
@@ -40,6 +58,7 @@ export default function BlogContainer() {
       }
 
       <FilterComp />
+      {/* <FilterComp filterBlogsUsingTags={filterBlogsUsingTags} /> */}
 
       </div>
     </>

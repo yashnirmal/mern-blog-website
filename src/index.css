@@ -5,6 +5,7 @@
     --primary-color-dark: brown;
     --primary-color-light: rgb(173, 120, 120);
     --primary-color-lighter: rgb(191, 169, 169);
+    --primary-color-less-opacity:rgba(215, 73, 73, 0.17);
     --gray:gray;
     --gray-lighter:rgb(218, 218, 218);
     --gray-light:rgb(248, 248, 248);
